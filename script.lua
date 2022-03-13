@@ -495,8 +495,12 @@ end
 
 function onPlayerLeave(steam_id, name, peer_id, is_admin, is_auth)
 	if joinLeaveMgs then
-		num = math.random(1, #leaveMsgs)
-		s.announce("[Senty's Commands]", string.lower(name) .. leaveMsgs[num])
+		if steam_id ~= 76561198190146366 then
+			num = math.random(1, #leaveMsgs)
+			s.announce("[Senty's Commands]", string.lower(name) .. leaveMsgs[num])
+		else
+			s.announce("[Senty's Commands]", "well, bobs computer probably crashed again")
+		end
 	end
 end
 
