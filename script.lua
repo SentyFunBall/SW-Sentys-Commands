@@ -97,7 +97,8 @@ deathMsgs = {
 	" reached 0 sanity",
 	" was killed by a zombie",
 	" listened to bad music",
-	" saw WWW"
+	" saw WWW",
+	" found out Obamas last name"
 }
 
 joinMsgs = {
@@ -110,7 +111,8 @@ joinMsgs = {
 	" wants to see the madness",
 	"'s sanity is going down by the second",
 	" prepared the will",
-	" joined, hope your vaccinated"
+	" joined, hope your vaccinated",
+	" joined, please dont"
 }
 
 leaveMsgs = {
@@ -122,6 +124,10 @@ leaveMsgs = {
 	" left, they're not dead *yet*",
 	" stopped playing",
 	" alt+f4'd",
+	" got covid quarantined",
+	" visted the shadow realm [jimbo]",
+	" is going to touch grass",
+	" is funging some tokens"
 }
 
 --[[function onTick(gt)
