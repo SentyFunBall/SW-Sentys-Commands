@@ -94,6 +94,14 @@ deathMsgs = {
 	" went onto twitter.com"
 }
 
+joinMsgs = {
+
+}
+
+leaveMsgs = {
+	
+}
+
 --[[function onTick(gt)
 	if tick % 300 == 0 then
 		pList = server.getPlayers()
