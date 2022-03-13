@@ -12,6 +12,8 @@ adminClamp = property.slider("Spawning clamp for admins", 2, 300, 1, 2500)
 
 debug = property.checkbox("Debug mode", "false")
 
+s = server
+
 death = {{false}}
 
 spawnedObjects = {}
@@ -124,11 +126,11 @@ leaveMsgs = {
 
 --[[function onTick(gt)
 	if tick % 300 == 0 then
-		pList = server.getPlayers()
+		pList = s.getPlayers()
 		for index in pairs(pList) do
-			object_id, is_success = server.getPlayerCharacterID(pList[index].id) --> returns: object_id
+			object_id, is_success = s.getPlayerCharacterID(pList[index].id) --> returns: object_id
 			for i=0,4,1 do
-				eId, is_success = server.getCharacterItem(object_id, i)
+				eId, is_success = s.getCharacterItem(object_id, i)
 				playerItems.object_id.i = eId or 0
 			end
 		end
@@ -168,10 +170,10 @@ function onCreate(create)
 	end
 	while true do
 		local i=g_savedata.maxOID+1
-		local Matrix, is_success = server.getObjectPos(i)
+		local Matrix, is_success = s.getObjectPos(i)
 		if is_success then
 			if i>g_savedata.maxOID then
-				--server.announce("Built in object_id", math.tointeger(i),-1)
+				--s.announce("Built in object_id", math.tointeger(i),-1)
 				g_savedata.maxOID=i
 			end
 		else break end
@@ -190,270 +192,270 @@ function onCustomCommand(full_message, user_peer_id, is_admin, is_auth, command,
 			numberToSpawn = 1
 		end
 		if arg1 == nil then
-			server.announce("[Senty's Commands]", "Spawn syntax: ?spawn [object to spawn] [number to spawn] op: [object type]")
-			server.announce("[Senty's Commands]", "Ex: ?spawn seal 1 [Spawns 1 seal]")
+			s.announce("[Senty's Commands]", "Spawn syntax: ?spawn [object to spawn] [number to spawn] op: [object type]")
+			s.announce("[Senty's Commands]", "Ex: ?spawn seal 1 [Spawns 1 seal]")
 		elseif arg1 == "meg" and user_peer_id == 0 then
 			if animals then
 				if numberToSpawn >= 1 then
-					transform_matrix, is_success = server.getPlayerPos(user_peer_id)
+					transform_matrix, is_success = s.getPlayerPos(user_peer_id)
 					for i = 1, numberToSpawn, 1 do
-						object_id, is_success = server.spawnAnimal(transform_matrix, 0, 11)
+						object_id, is_success = s.spawnAnimal(transform_matrix, 0, 11)
 						table.insert(spawnedObjects, object_id)
 					end
 					if is_success then
-						server.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " meg(s)!")
+						s.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " meg(s)!")
 					else 
-						server.announce("[Senty's Commands]", "Failed to spawn the animal!")
+						s.announce("[Senty's Commands]", "Failed to spawn the animal!")
 					end
 				else
-					server.announce("[Senty's Commands]", "Please include a number: 1-25")
+					s.announce("[Senty's Commands]", "Please include a number: 1-25")
 				end
 			else
-				server.announce("[Senty's Commands]", "Animal spawning is disabled!")
+				s.announce("[Senty's Commands]", "Animal spawning is disabled!")
 			end
 		elseif arg1 == "seal" and is_admin then
 			if animals then
 				if numberToSpawn >= 1 then
-					transform_matrix, is_success = server.getPlayerPos(user_peer_id)
+					transform_matrix, is_success = s.getPlayerPos(user_peer_id)
 					for i = 1, numberToSpawn, 1 do
-						object_id, is_success = server.spawnAnimal(transform_matrix, 2, 1)
+						object_id, is_success = s.spawnAnimal(transform_matrix, 2, 1)
 						table.insert(spawnedObjects, object_id)
 					end
 					if is_success then
-						server.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " seals(s)!")
+						s.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " seals(s)!")
 					else 
-						server.announce("[Senty's Commands]", "Failed to spawn the animal!")
+						s.announce("[Senty's Commands]", "Failed to spawn the animal!")
 					end
 				else
-					server.announce("[Senty's Commands]", "Please include a number: 1-25")
+					s.announce("[Senty's Commands]", "Please include a number: 1-25")
 				end
 			else
-				server.announce("[Senty's Commands]", "Animal spawning is disabled!")
+				s.announce("[Senty's Commands]", "Animal spawning is disabled!")
 			end
 		elseif arg1 == "whale" and is_admin then
 			if animals then
 				if numberToSpawn >= 1 then
-					transform_matrix, is_success = server.getPlayerPos(user_peer_id)
+					transform_matrix, is_success = s.getPlayerPos(user_peer_id)
 					for i = 1, numberToSpawn, 1 do
-						object_id, is_success = server.spawnAnimal(transform_matrix, 1, 1)
+						object_id, is_success = s.spawnAnimal(transform_matrix, 1, 1)
 						table.insert(spawnedObjects, object_id)
 					end
 					if is_success == true then
-						server.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " whale(s)!")
+						s.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " whale(s)!")
 					else 
-						server.announce("[Senty's Commands]", "Failed to spawn the animal!")
+						s.announce("[Senty's Commands]", "Failed to spawn the animal!")
 					end
 				else 
-					server.announce("[Senty's Commands]", "Please include a number: 1-25")
+					s.announce("[Senty's Commands]", "Please include a number: 1-25")
 				end
 			else
-				server.announce("[Senty's Commands]", "Animal spawning is disabled!")
+				s.announce("[Senty's Commands]", "Animal spawning is disabled!")
 			end
 		elseif arg1 == "peg" and animals and is_admin then
 			if animals then
 				if numberToSpawn >= 1 then
-					transform_matrix, is_success = server.getPlayerPos(user_peer_id)
+					transform_matrix, is_success = s.getPlayerPos(user_peer_id)
 					for i = 1, numberToSpawn, 1 do
-						object_id, is_success = server.spawnAnimal(transform_matrix, 3, 1)
+						object_id, is_success = s.spawnAnimal(transform_matrix, 3, 1)
 						table.insert(spawnedObjects, object_id)
 					end
 					if is_success == true then
-						server.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " penguin(s)!")
+						s.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " penguin(s)!")
 					else 
-						server.announce("[Senty's Commands]", "Failed to spawn the animal!")
+						s.announce("[Senty's Commands]", "Failed to spawn the animal!")
 					end
 				else 
-					server.announce("[Senty's Commands]", "Please include a number: 1-25")
+					s.announce("[Senty's Commands]", "Please include a number: 1-25")
 				end
 			else
-				server.announce("[Senty's Commands]", "Animal spawning is disabled!")
+				s.announce("[Senty's Commands]", "Animal spawning is disabled!")
 			end
 		elseif arg1 == "shark" and animals and is_admin then
 			if animals then
 				if numberToSpawn >= 1 then
-					transform_matrix, is_success = server.getPlayerPos(user_peer_id)
+					transform_matrix, is_success = s.getPlayerPos(user_peer_id)
 					for i = 1, numberToSpawn, 1 do
-						object_id, is_success = server.spawnAnimal(transform_matrix, 0, 1)
+						object_id, is_success = s.spawnAnimal(transform_matrix, 0, 1)
 						table.insert(spawnedObjects, object_id)
 					end
 					if is_success == true then
-						server.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " shark(s)!")
+						s.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " shark(s)!")
 					else 
-						server.announce("[Senty's Commands]", "Failed to spawn the animal!")
+						s.announce("[Senty's Commands]", "Failed to spawn the animal!")
 					end
 				else 
-					server.announce("[Senty's Commands]", "Please include a number: 1-25")
+					s.announce("[Senty's Commands]", "Please include a number: 1-25")
 				end
 			else
-				server.announce("[Senty's Commands]", "Animal spawning is disabled!")
+				s.announce("[Senty's Commands]", "Animal spawning is disabled!")
 			end
 		elseif arg1 == "object" then
 			if objects then
 				if arg3 ~= nil then
-					transform_matrix, is_success = server.getPlayerPos(user_peer_id)
+					transform_matrix, is_success = s.getPlayerPos(user_peer_id)
 					for i = 1, numberToSpawn, 1 do
-						object_id, is_success = server.spawnObject(transform_matrix, tonumber(arg3))
+						object_id, is_success = s.spawnObject(transform_matrix, tonumber(arg3))
 						table.insert(spawnedObjects, object_id)
 					end
 					if is_success then
-						server.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " object(s)!")
+						s.announce("[Senty's Commands]", "Spawned " .. numberToSpawn .. " object(s)!")
 					else 
-						server.announce("[Senty's Commands]", "Failed to spawn the animal!")
+						s.announce("[Senty's Commands]", "Failed to spawn the animal!")
 					end
 				else
-					server.announce("[Senty's Commands]", "Spawn object syntax: ?spawn object [number to spawn] [object type]")
-					server.announce("[Senty's Commands]", "Ex: ?spawn object 3 13: spawns 3 office chairs")
+					s.announce("[Senty's Commands]", "Spawn object syntax: ?spawn object [number to spawn] [object type]")
+					s.announce("[Senty's Commands]", "Ex: ?spawn object 3 13: spawns 3 office chairs")
 				end
 			else
-				server.announce("[Senty's Commands]", "Prop spawning is disabled!")
+				s.announce("[Senty's Commands]", "Prop spawning is disabled!")
 			end
 		else
-			server.announce("[Senty's Commands]", "Correct types: meg, seal, whale, peg, object [object type]")
+			s.announce("[Senty's Commands]", "Correct types: meg, seal, whale, peg, object [object type]")
 		end
 	elseif command == "?despawn" and is_admin then
 		failedObjects = 0
 		failedAtLeast1 = false
-		system_time = server.getTimeMillisec()
+		system_time = s.getTimeMillisec()
 		count = tablelength(spawnedObjects)
 		for k, v in pairs(spawnedObjects) do
-			is_success = server.despawnObject(v, true)
-			is_success2 = server.despawnVehicle(v, true)
+			is_success = s.despawnObject(v, true)
+			is_success2 = s.despawnVehicle(v, true)
 			if not is_success and not is_success2 then
 				failedObjects = failedObjects + 1
 				failedAtLeast1 = true
 				if debug then
-					server.announce("[SC Debug]", "Failed obj "..v)
+					s.announce("[SC Debug]", "Failed obj "..v)
 				end
 			end
 		end
 		
 		spawnedObjects = {}
-		timer = server.getTimeMillisec() - system_time
+		timer = s.getTimeMillisec() - system_time
 		
 		if is_success or is_success2 then
-			server.announce("[Senty's Commands]", "Despawned all known objects")
-			server.announce("[Senty's Commands]", "Time: ".. timer .. " ms. Objects removed: " .. count)
+			s.announce("[Senty's Commands]", "Despawned all known objects")
+			s.announce("[Senty's Commands]", "Time: ".. timer .. " ms. Objects removed: " .. count)
 		end
 		
 		if failedAtLeast1 then
-			server.announce("[Senty's Commands]", "Failed to despawn "..failedObjects.." objects! They were probably removed from the world!")
+			s.announce("[Senty's Commands]", "Failed to despawn "..failedObjects.." objects! They were probably removed from the world!")
 		end
 	elseif command == "?veh" and is_admin then
 		if vehicles then
-			transform_matrix, is_success = server.getPlayerPos(user_peer_id)
+			transform_matrix, is_success = s.getPlayerPos(user_peer_id)
 			vehname = arg1
 			if arg2 ~= null then vehname = vehname .. " " .. arg2 end
 			if arg3 ~= null then vehname = vehname .. " " .. arg3 end
 			if arg4 ~= null then vehname = vehname .. " " .. arg4 end
 			if arg5 ~= null then vehname = vehname .. " " .. arg5 end
-			vehicle_id, is_success = server.spawnVehicle(transform_matrix, tostring(vehname))
+			vehicle_id, is_success = s.spawnVehicle(transform_matrix, tostring(vehname))
 			if is_success == true then
-				server.announce("[Senty's Commands]", "Spawned " .. vehname)
+				s.announce("[Senty's Commands]", "Spawned " .. vehname)
 				table.insert(spawnedObjects, vehicle_id)
 			else 
-				server.announce("[Senty's Commands]", "Failed to spawn!")
+				s.announce("[Senty's Commands]", "Failed to spawn!")
 			end
 		else
-			server.announce("[Senty's Commands]", "Vehicle spawning is disabled!")
+			s.announce("[Senty's Commands]", "Vehicle spawning is disabled!")
 		end
 	elseif command == "?tp" then
 		if tp then
-			tpToPos, is_success = server.getPlayerPos(arg1)
+			tpToPos, is_success = s.getPlayerPos(arg1)
 			if is_success then
-				server.setPlayerPos(user_peer_id, tpToPos)
+				s.setPlayerPos(user_peer_id, tpToPos)
 			else
-				server.announce("[Senty's Commands]", "An error occurred! Make sure you put in the right peer num!")
+				s.announce("[Senty's Commands]", "An error occurred! Make sure you put in the right peer num!")
 			end
 		else
-			server.announce("[Senty's Commands]", "Teleporting is disabled!")
+			s.announce("[Senty's Commands]", "Teleporting is disabled!")
 		end
 	elseif command == "?bring" and is_admin then
-		tpToPos, is_success = server.getPlayerPos(user_peer_id)
+		tpToPos, is_success = s.getPlayerPos(user_peer_id)
 		if is_success then
-			server.setPlayerPos(tonumber(arg1), tpToPos)
+			s.setPlayerPos(tonumber(arg1), tpToPos)
 		else
-			server.announce("[Senty's Commands]", "An error occurred! Make sure you put in the right peer num!")
+			s.announce("[Senty's Commands]", "An error occurred! Make sure you put in the right peer num!")
 		end
 	elseif command == "?kill" and is_admin and user_peer_id == 0 then
 		if arg1 ~= "all" then
 			arg1 = arg1 or 0
-			object_id, is_success = server.getPlayerCharacterID(arg1) --> returns: object_id
+			object_id, is_success = s.getPlayerCharacterID(arg1) --> returns: object_id
 			if is_success then
-				server.killCharacter(object_id)
+				s.killCharacter(object_id)
 				death[arg1+1] = true
 				extraCallbacks()
 			else
-				server.announce("[Senty's Commands]", "An error occurred! Make sure you put in the right peer num!")
+				s.announce("[Senty's Commands]", "An error occurred! Make sure you put in the right peer num!")
 			end
 		else
-			PLAYER_LIST = server.getPlayers()
+			PLAYER_LIST = s.getPlayers()
 			for index in pairs(PLAYER_LIST) do
-				object_id, is_success = server.getPlayerCharacterID(PLAYER_LIST[index].id) --> returns: object_id
+				object_id, is_success = s.getPlayerCharacterID(PLAYER_LIST[index].id) --> returns: object_id
 				if is_success then
-					server.killCharacter(object_id)
+					s.killCharacter(object_id)
 					death[PLAYER_LIST[index].id+1] = true
 					extraCallbacks()
 				else
-					server.announce("[Senty's Commands]", "An error occurred! Make sure you put in the right peer num!")
+					s.announce("[Senty's Commands]", "An error occurred! Make sure you put in the right peer num!")
 				end
 			end
 		end
 	elseif command == "?admin" and is_admin then
-		server.addAdmin(arg1)
+		s.addAdmin(arg1)
 	elseif command == "?radmin" and is_admin then
-		server.removeAdmin(arg1)
+		s.removeAdmin(arg1)
 	elseif command == "?debug" and is_admin then
 		if arg1 == "table" then
-			server.announce("[SC Debug]", "spawnedObjects = " .. table.concat(spawnedObjects))
+			s.announce("[SC Debug]", "spawnedObjects = " .. table.concat(spawnedObjects))
 		elseif arg1 == "savedata" then
-			server.announce("[SC Debug]", "g_savedata = " .. table.concat(g_savedata))
+			s.announce("[SC Debug]", "g_savedata = " .. table.concat(g_savedata))
 		elseif arg1 == "settings" then
-			server.announce("[SC Debug]", "jlm = " .. tostring(joinLeaveMgs) .. ", aa = " .. tostring(autoAuth) .. ", a = " .. tostring(animals) .. ", v = " .. tostring(vehicles) .. ", p = " .. tostring(objects) .. ", dm = " .. tostring(dieMsg) .. ", nac = " .. nonAdminClamp .. ", ac = " .. adminClamp)
+			s.announce("[SC Debug]", "jlm = " .. tostring(joinLeaveMgs) .. ", aa = " .. tostring(autoAuth) .. ", a = " .. tostring(animals) .. ", v = " .. tostring(vehicles) .. ", p = " .. tostring(objects) .. ", dm = " .. tostring(dieMsg) .. ", nac = " .. nonAdminClamp .. ", ac = " .. adminClamp)
 		elseif arg1 == "toggle" then
 			debug = not debug
 			g_savedata.d = debug
-			server.announce("[SC Debug]","Changed debug to "..tostring(debug))
+			s.announce("[SC Debug]","Changed debug to "..tostring(debug))
 		else
-			server.announce("[SC Debug]", "Valid args: table, savedata, settings, toggle")
+			s.announce("[SC Debug]", "Valid args: table, savedata, settings, toggle")
 		end
 	elseif command == "?changelog" then
-		server.announce("[Senty's Commands]", "v1.3: Changelog, random death messages, fixed some bugs, items respawn on death")
-		server.announce("[Senty's Commands]", "v1.3.5: more death messages, fixed ?bring, added random join and leave messages")
+		s.announce("[Senty's Commands]", "v1.3: Changelog, random death messages, fixed some bugs, items respawn on death")
+		s.announce("[Senty's Commands]", "v1.3.5: more death messages, fixed ?bring, added random join and leave messages")
 	elseif command == "?help" then
-		server.announce("[Senty's Commands]", "Valid commands: help, changelog, debug, spawn, veh, despawn, tp, gren, admin, radmin, kill")
+		s.announce("[Senty's Commands]", "Valid commands: help, changelog, debug, spawn, veh, despawn, tp, gren, admin, radmin, kill")
 	elseif command == "?gren"  and is_admin then
-		transform_matrix, is_success = server.getPlayerPos(user_peer_id)
+		transform_matrix, is_success = s.getPlayerPos(user_peer_id)
 		for i = 1, 25, 1 do
-			object_id, is_success = server.spawnObject(transform_matrix, 67)
+			object_id, is_success = s.spawnObject(transform_matrix, 67)
 			table.insert(spawnedObjects, object_id)
 		end
 	elseif command == "?met" and is_admin then
-		transform_matrix,is_success = server.getPlayerPos(user_peer_id)
-		server.spawnExplosion(transform_matrix, arg1)
+		transform_matrix,is_success = s.getPlayerPos(user_peer_id)
+		s.spawnExplosion(transform_matrix, arg1)
 	end
 end
 
 function onPlayerDie(steam_id, name, peer_id, is_admin, is_auth)
 	if dieMsg then
 		num = math.random(1, #deathMsgs)
-		server.announce("[Senty's Commands]", string.lower(name) .. deathMsgs[num])
+		s.announce("[Senty's Commands]", string.lower(name) .. deathMsgs[num])
 	end
 	if respawnWithItems then
 		death[peer_id+1] = true
-		object_id, is_success = server.getPlayerCharacterID(peer_id)
+		object_id, is_success = s.getPlayerCharacterID(peer_id)
 		for i=1,6,1 do
-			eId, is_success = server.getCharacterItem(object_id, i)
+			eId, is_success = s.getCharacterItem(object_id, i)
 			if is_success then
 				playerItems[peer_id+1][i] = eId
 			end
-			if debug then server.announce("[SC Debug]", "Stored item " .. eId .. " from slot " .. i) end
+			if debug then s.announce("[SC Debug]", "Stored item " .. eId .. " from slot " .. i) end
 		end
 	end
 end
 
 function onPlayerRespawn(peer_id)
 	if respawnWithItems then
-		object_id, is_success = server.getPlayerCharacterID(peer_id)
+		object_id, is_success = s.getPlayerCharacterID(peer_id)
 		death[peer_id+1] = false
 		for i=1,6,1 do
 			eId = playerItems[peer_id+1][i]
@@ -463,9 +465,9 @@ function onPlayerRespawn(peer_id)
 			if eId == 9 then Int = 4 elseif eId == 11 then Int = 4 elseif eId == 12 then Int = 4 elseif eId == 13 then Int = 1 elseif eId == 14 then Int = 4 elseif eId == 31 then Int = 1 elseif eId == 33 then Int = 4 elseif eId == 35 then Int = 17 elseif eId == 36 then Int = 17 elseif eId == 37 then Int = 40 elseif eId == 39 then Int = 30 elseif eId == 41 then Int = 1 end
 			if eId == 10 then Float = 9 elseif eId == 26 then Float = 250 elseif eId == 27 then Float = 400 end
 			
-			is_success = server.setCharacterItem(object_id, i, eId, false, Int, Float)
+			is_success = s.setCharacterItem(object_id, i, eId, false, Int, Float)
 			if is_success and debug then
-				server.announce("[SC Debug]", "Recovered item " .. playerItems[peer_id+1][i] .. " into slot " .. i)
+				s.announce("[SC Debug]", "Recovered item " .. playerItems[peer_id+1][i] .. " into slot " .. i)
 			end
 		end
 	end
@@ -474,10 +476,10 @@ end
 function onPlayerJoin(steam_id, name, peer_id, is_admin, is_auth)
 	if joinLeaveMgs then
 		num = math.random(1, #joinMsgs)
-		server.announce("[Senty's Commands]", string.lower(name) .. joinMsgs[num] .." (type ?help for command list)")
+		s.announce("[Senty's Commands]", string.lower(name) .. joinMsgs[num] .." (type ?help for command list)")
 	end
 	if autoAuth then
-		server.addAuth(peer_id)
+		s.addAuth(peer_id)
 	end
 	if respawnWithItems then
 		playerItems[peer_id+1] = {0,0,0,0,0,0}
@@ -488,7 +490,7 @@ end
 function onPlayerLeave(steam_id, name, peer_id, is_admin, is_auth)
 	if joinLeaveMgs then
 		num = math.random(1, #leaveMsgs)
-		server.announce("[Senty's Commands]", string.lower(name) .. leaveMsgs[num])
+		s.announce("[Senty's Commands]", string.lower(name) .. leaveMsgs[num])
 	end
 end
 
@@ -506,11 +508,11 @@ end
 --credit to woe here
 function onObjectSpawn(object_id,peer_id) --use this like any other callback.
 	if debug then
-		server.announce("[SC Debug]", "object_id: "..math.tointeger(object_id)..", peer_id: "..math.tointeger(peer_id),-1)
+		s.announce("[SC Debug]", "object_id: "..math.tointeger(object_id)..", peer_id: "..math.tointeger(peer_id),-1)
 	end
-	is_success = server.despawnObject(object_id, true)
+	is_success = s.despawnObject(object_id, true)
 	if is_success and debug then
-		server.announce("[SC Debug]", "object " .. object_id .. " despawned")
+		s.announce("[SC Debug]", "object " .. object_id .. " despawned")
 	end
 end
 
@@ -518,12 +520,12 @@ function extraCallbacks()
 	while true do
 		local peer_id=-1
 		local object_id=g_savedata.maxOID+1
-		local MatrixO, is_success = server.getObjectPos(object_id)
+		local MatrixO, is_success = s.getObjectPos(object_id)
 		if is_success then
 			if object_id>g_savedata.maxOID then
-				PLAYER_LIST = server.getPlayers()
+				PLAYER_LIST = s.getPlayers()
 				for index, data in pairs(PLAYER_LIST) do
-					local MatrixP, is_success = server.getPlayerPos(data.id)
+					local MatrixP, is_success = s.getPlayerPos(data.id)
 					local distanceOP = 25
 					if matrix.distance(MatrixO, MatrixP)<distanceOP then
 						peer_id=data.id
