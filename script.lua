@@ -91,15 +91,35 @@ deathMsgs = {
 	" met yo mama",
 	" looked in the mirror",
 	" supported russia",
-	" went onto twitter.com"
+	" went onto twitter.com",
+	" reached 0 sanity",
+	" was killed by a zombie",
+	" listened to bad music",
+	" saw WWW"
 }
 
 joinMsgs = {
-
+	" joined, hope ya brought a gun",
+	" joined, hope ya brought a rocket launcher",
+	" joined, hope ya brought a flamethrower",
+	" joined, hide",
+	" joined the game",
+	" figured out the password",
+	" wants to see the madness",
+	"'s sanity is going down by the second",
+	" prepared the will",
+	" joined, hope your vaccinated"
 }
 
 leaveMsgs = {
-	
+	" didn't like you guys",
+	" left the game",
+	" left, shoot 'em up!",
+	" left, you can stop hiding",
+	" left, at least they didn't die",
+	" left, they're not dead *yet*",
+	" stopped playing",
+	" alt+f4'd",
 }
 
 --[[function onTick(gt)
@@ -398,7 +418,7 @@ function onCustomCommand(full_message, user_peer_id, is_admin, is_auth, command,
 		end
 	elseif command == "?changelog" then
 		server.announce("[Senty's Commands]", "v1.3: Changelog, random death messages, fixed some bugs, items respawn on death")
-		server.announce("[Senty's Commands]", "v1.3.4: more death messages, removed unflip from ?help, fixed bugs, added ?debug toggle, ?tp no longer admin-only, added ?bring")
+		server.announce("[Senty's Commands]", "v1.3.5: more death messages, fixed ?bring, added random join and leave messages")
 	elseif command == "?help" then
 		server.announce("[Senty's Commands]", "Valid commands: help, changelog, debug, spawn, veh, despawn, tp, gren, admin, radmin, kill")
 	elseif command == "?gren"  and is_admin then
@@ -453,7 +473,8 @@ end
 
 function onPlayerJoin(steam_id, name, peer_id, is_admin, is_auth)
 	if joinLeaveMgs then
-		server.announce("[Senty's Commands]", name .. " joined, hope ya brought pizza (type ?help for command list)")
+		num = math.random(1, #joinMsgs)
+		server.announce("[Senty's Commands]", string.lower(name) .. joinMsgs[num] .." (type ?help for command list)")
 	end
 	if autoAuth then
 		server.addAuth(peer_id)
@@ -466,7 +487,8 @@ end
 
 function onPlayerLeave(steam_id, name, peer_id, is_admin, is_auth)
 	if joinLeaveMgs then
-		server.announce("[Senty's Commands]", name .. " left, they didn't like you guys")
+		num = math.random(1, #leaveMsgs)
+		server.announce("[Senty's Commands]", string.lower(name) .. leaveMsgs[num])
 	end
 end
 
